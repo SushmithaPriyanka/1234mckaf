@@ -1,0 +1,103 @@
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.By;
+
+import java.io.FileReader;
+import java.util.Iterator;
+import java.util.Map;
+import java.io.IOException;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+public class FieldLocator //DO NOT Change the class Name
+{
+	static JSONArray address;
+	public static WebDriver driver;
+	String nickname,contactname,city,type;
+	
+	public void createDriver() //DO NOT change the method signature
+	{
+	   //Implement code to create Driver from DriverSetup and set to 'static' driver variable
+	   driver=DriverSetup.getWebDriver();
+	   
+	}
+	
+	public JSONArray ReadFile(String fileName)   //DO NOT change the method signature
+    {
+        //Implement code to read and return addresses as JSON array
+        Object obj = new JSONParser().parse(new FileReader(fileName));
+        JSONObject jo = (JSONObject) obj; 
+        address= (JSONArray) jo.get("Addresses"); 
+        return address;
+        
+    }
+    
+    public String getNickName(int id) {
+	
+        //Implement code to return nickname from address
+    for (int i = 0; i < address.size(); i++) 
+    {
+    JSONObject rec = address.getJSONObject(i);
+    if(Integer.parseInt((String)rec.get("id"))==id) nickname = (String)rec.get("NickName");
+    }
+    return nickname;
+    }
+
+	public String getContactName(int id) {
+		//Implement code to return contactname from address
+	for (int i = 0; i < address.size(); i++) 
+    {
+    JSONObject rec = address.getJSONObject(i);
+    if(Integer.parseInt((String)rec.get("id"))==id) contactname= (String)rec.get("ContactName");
+    }
+    return contactname;
+	}
+
+	public String getCity(int id) 
+	{
+		//Implement code to return city from address
+	for (int i = 0; i < address.size(); i++) 
+    {
+    JSONObject rec = address.getJSONObject(i);
+    if(Integer.parseInt((String)rec.get("id"))==id) city= (String)rec.get("City");
+    }
+    return city;
+	}
+
+
+	public String getType(int id) {
+		//Implement code to return type from address
+	for (int i = 0; i < address.size(); i++) 
+    {
+    JSONObject rec = address.getJSONObject(i);
+    if(Integer.parseInt((String)rec.get("id"))==id) type= (String)rec.get("Type");
+    }
+    return type;
+	}
+
+	public String getMessage() {
+		//Implement code to submit form with values got from json and return the success message printed on the page.
+		driver.findElement(By.xpath("//*[@id='nickname']")).sendKeys(nickname);
+		driver.findElement(By.xpath("//*[@id='contact']")).sendKeys(contactname);
+		driver.findElement(By.xpath("//*[@id='city']")).sendKeys(city);
+		driver.findElement(By.xpath("//*[@id='type']")).sendKeys(type);
+		driver.findElement(By.xpath("//*[@id='add']")).click();
+	}
+
+	public static void main(String[] args) {
+		FieldLocator pagLocator=new FieldLocator();
+	   //Implement the required co
+	    //Close the driver
+	    pagLocator.createDriver();
+	    pagLocator.ReadFile("AddressBook");
+	    pagLocator.getNickName(1);
+	    pagLocator.getContactName(1);
+	    pagLocator.getCity(1);
+	    pagLocator.getType(1);
+	    driver.close();
+	    
+	}
+
+}
+

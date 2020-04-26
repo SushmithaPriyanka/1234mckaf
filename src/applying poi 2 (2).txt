@@ -1,0 +1,61 @@
+import java.io.File;
+
+import java.io.FileInputStream;
+
+import java.io.FileOutputStream;
+
+import org.apache.poi.xssf.usermodel.XSSFCell;
+
+import org.apache.poi.xssf.usermodel.XSSFRow;
+
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.ss.usermodel.*;
+
+
+
+public class CusRegExcel {     //DO NOT change the class name
+
+
+    
+
+
+public static void writeExcelData() throws Exception  {         //DO NOT change the method signature
+	   
+
+ //FileInputStream fis = new FileOutputStream("CustReg.xlsx");
+	    
+		XSSFWorkbook wb = new XSSFWorkbook();
+		XSSFSheet ws = wb.createSheet("TestCase");
+	    
+	    
+		Row dataRow = ws.createRow(0);
+
+	    	dataRow.createCell(0).setCellValue("John");
+
+	    	dataRow.createCell(1).setCellValue("Peter");
+
+		dataRow.createCell(2).setCellValue("Sam");
+
+	    
+		FileOutputStream out = new FileOutputStream(new File("CustReg.xlsx"));
+	
+        wb.write(out);
+        
+		out.close();
+}        
+    
+
+
+
+		public static void main(String[] args) throws Exception 
+	{ 
+
+	    
+		CusRegExcel customer = new CusRegExcel();
+	    
+		customer.writeExcelData();
+	
+}
+}
